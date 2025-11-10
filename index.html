@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Activity & Task Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>🎯 Activity & Task Tracker</h1>
+    <p>Organize your day with ease</p>
+  </header>
+
+  <main>
+    <!-- First Row -->
+    <div class="row">
+      <section class="medium">
+        <h2>📝 Update Daily Activity</h2>
+        <input type="date" id="activity-date" />
+        <textarea id="activity-text" rows="4" placeholder="What did you do today?"></textarea>
+        <button id="save-activity-btn">Save Activity</button>
+        <p class="success" id="activity-success"></p>
+      </section>
+
+     <section class="small fixed-height">
+  <h2>📂 View All</h2>
+  <button onclick="window.open('activities.html', '_blank')">View All Activities</button>
+  <button onclick="window.open('tasks.html', '_blank')">View All Tasks</button>
+</section>
+
+    </div>
+
+    <!-- Second Row -->
+    <div class="row">
+      <section class="medium">
+        <h2>📋 Upcoming Tasks/Events</h2>
+        <select id="entry-type">
+          <option value="Event">Event</option>
+          <option value="Task">Task</option>
+        </select>
+        <input type="text" id="entry-text" placeholder="Task/Event Name" />
+        <input type="date" id="entry-date" />
+        <button onclick="addEntry()">Add</button>
+        <ul id="event-list"></ul>
+      </section>
+
+      <section class="small fixed-height">
+        <h2>🗑️ Delete Activity</h2>
+        <input type="date" id="delete-date" />
+        <button onclick="deleteActivity()">Delete Activity</button>
+      </section>
+    </div>
+
+    <!-- Export -->
+    <section>
+      <h2>📄 Export to PDF</h2>
+      <button id="export-activity">Export Activities</button>
+      <button id="export-tasks">Export Tasks</button>
+      <button id="export-events">Export Events</button>
+      <button id="export-activity-event">Export Activities + Events</button>
+      <button id="export-activity-task">Export Activities + Tasks</button>
+      <button id="export-event-task">Export Events + Tasks</button>
+      <button id="export-all">Export All</button>
+    </section>
+
+    <!-- Editable Tables -->
+    <section id="view-section" style="display:none;">
+      <h2 id="view-title"></h2>
+      <table id="view-table">
+        <thead>
+          <tr><th>Date</th><th>Text</th><th>Action</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

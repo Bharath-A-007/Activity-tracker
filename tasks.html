@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Tasks</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>📋 All Tasks</h1>
+    <p>Editable view of your tasks</p>
+  </header>
+
+  <main>
+    <section>
+      <table id="task-table">
+        <thead>
+          <tr><th>Date</th><th>Task</th><th>Action</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    function loadTasks() {
+      const tbody = document.querySelector("#task-table tbody");
+      tbody.innerHTML = "";
+      const tasks = JSON.parse(localStorage.getItem("tasks") || "[]").filter(t => t.type === "Task");
+      tasks.forEach((task, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><input type="date" value="${task.date}"></td>
+          <td><input value="${task.text}"></td>
+          <td><button onclick="updateTask(${index}, this)">Update</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function updateTask(index, btn) {
+      const row = btn.parentElement.parentElement;
+      const date = row.querySelector("td:nth-child(1) input").value;
+      const text = row.querySelector("td:nth-child(2) input").value;
+      const all = JSON.parse(localStorage.getItem("tasks") || "[]");
+      const filteredIndex = all.findIndex((t, i) => t.type === "Task" && i === index);
+      if (filteredIndex !== -1) {
+        all[filteredIndex] = { date, text, type: "Task" };
+        localStorage.setItem("tasks", JSON.stringify(all));
+        alert("Task updated!");
+      }
+    }
+
+    loadTasks();
+  </script>
+</body>
+</html>

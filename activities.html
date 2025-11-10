@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Activities</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>📅 All Activities</h1>
+    <p>Editable view of your daily records</p>
+  </header>
+
+  <main>
+    <section>
+      <table id="activity-table">
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Action</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    function loadActivities() {
+      const tbody = document.querySelector("#activity-table tbody");
+      tbody.innerHTML = "";
+      Object.keys(localStorage)
+        .filter(k => k.startsWith("activity_"))
+        .forEach(k => {
+          const date = k.replace("activity_", "");
+          const value = localStorage.getItem(k);
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td><input type="date" value="${date}" disabled></td>
+            <td><input value="${value}"></td>
+            <td><button onclick="updateActivity('${date}', this)">Update</button></td>
+          `;
+          tbody.appendChild(row);
+        });
+    }
+
+    function updateActivity(date, btn) {
+      const newValue = btn.parentElement.parentElement.querySelector("td:nth-child(2) input").value;
+      localStorage.setItem("activity_" + date, newValue);
+      alert("Activity updated!");
+    }
+
+    loadActivities();
+  </script>
+</body>
+</html>
